@@ -1,5 +1,15 @@
+"""
+file-to-db
+readfile.py
+
+read in data file and generate data object for further db queries
+
+@By Seth (Xiaohui) Wang
+@email: sethwang199418@gmail.com
+"""
 import csv
 import sys
+from query import *
 
 formats = ['csv', 'txt', 'json']
 supported_types = ['text', 'int']
@@ -48,8 +58,11 @@ def parse_csv(filename, table_name, primary_key=None):
     primary_index = col_names.index(primary_key)
     print data
     print types
+    print(create_table(table_name, "id", col_names, types))
+    print(insert_one_row(table_name, col_names, data[0]))
+    print(insert_rows(table_name, col_names, data))
     print primary_index
 
 if __name__ == "__main__":
-    filename = "./Book1.csv"
+    filename = "./example.csv"
     parse_csv(filename, "portfolio", "id")
