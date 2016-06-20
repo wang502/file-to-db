@@ -10,9 +10,10 @@ read in data file and generate data object for further db queries
 import csv
 import sys
 from query import *
+from db import *
 
 formats = ['csv', 'txt', 'json']
-supported_types = ['text', 'int']
+supported_types = ['text', 'integer']
 
 def check_format(filename):
     tokens = filename.split('.')
@@ -41,7 +42,7 @@ def parse_csv(filename, table_name, primary_key=None):
                 try:
                     for j in range(len(row)):
                         if row[j].isdigit():
-                            types[col_names[j]] = 'int'
+                            types[col_names[j]] = 'integer'
                         else:
                             types[col_names[i]] = 'text'
                             j += 1
@@ -55,14 +56,11 @@ def parse_csv(filename, table_name, primary_key=None):
     except Exception as e:
         print e
     f.close()
-    primary_index = col_names.index(primary_key)
-    print data
-    print types
-    print(create_table(table_name, "id", col_names, types))
-    print(insert_one_row(table_name, col_names, data[0]))
-    print(insert_rows(table_name, col_names, data))
-    print primary_index
+    q = query(table_name, primary_key, col_names, data, types)
+    return q
 
 if __name__ == "__main__":
     filename = "./example.csv"
-    parse_csv(filename, "portfolio", "id")
+    q = parse_csv(filename, "portfolio", "id")
+    status = query_db(q.insert_n_rows())
+    print(status)
