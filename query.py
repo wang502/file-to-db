@@ -27,6 +27,17 @@ class query:
     def insert_n_rows(self):
         return insert_n_rows(self.table_name, self.col_names, self.data, self.types)
 
+    def __str__(self):
+        strs = "table name: " + self.table_name + "\n"
+        for col in self.col_names:
+            strs += str(col) + "             "
+        strs += "\n"
+        for row in self.data:
+            for cell in row:
+                strs += str(cell) + "             "
+            strs += "\n"
+        return strs
+
 # postgresql create table statement
 def create_table(table_name, primary_key, col_names, types):
     query = "create table " + table_name + " ("
