@@ -64,6 +64,7 @@ def insert_one_row(table_name, col_names, row_data, types):
 
 # postgresql insert multiple rows
 def insert_n_rows(table_name, col_names, data, types):
+    print(types)
     query = "insert into " + table_name + "("
     for i in range(len(col_names)):
         query += col_names[i] + ("" if i == len(col_names)-1 else ",")
