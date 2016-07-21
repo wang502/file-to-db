@@ -47,7 +47,6 @@ def parse_csv(file_path, table_name, primary_key=None):
         i = 0
         col_names = []
         reader = csv.reader(f.read().splitlines())
-        #reader = csv.reader(f.read().splitlines(), dialect=csv.excel_tab)
         for row in reader:
             if i == 0:
                 col_names = row
